@@ -87,7 +87,6 @@ fig.update_layout(
 
 
 
-
 st.plotly_chart(fig, use_container_width=True)
 
 # -----------------------
@@ -112,17 +111,7 @@ fig2 = px.scatter(
     },
 )
 
-
-fig2.update_layout(
-    title='Progressive Passes vs Final Third Entries',
-    xaxis_title='Prog Passes /90',
-    yaxis_title='Final Third /90',
-    legend_title_text='Player Type'
-)
-
-
-
-fig2.update_traces(marker=dict(size=mid_prog_df['marker_size'], opacity=0.8))
+fig2.update_traces(marker=dict(size=9))
 
 st.plotly_chart(fig2, use_container_width=True)
 
@@ -175,5 +164,3 @@ def highlight_players(row):
         return ['' for _ in row]
 
 st.dataframe(rank_table.style.apply(highlight_players, axis=1))
-
-
