@@ -50,7 +50,7 @@ def assign_color(player):
 mid_prog_df['color_label'] = mid_prog_df['player'].apply(assign_color)
 
 COLOR_MAP = {
-    "Eriksen ": "#06355C",
+    "Eriksen ": "#0C6DBC",
     f"Selected: {selected_player} ": "#981717",
     "Other midfielders ": "#ADD8E6"
 }
@@ -85,7 +85,11 @@ fig.update_layout(
     legend_title_text='Player Type'
 )
 
-mid_prog_df['marker_size'] = mid_prog_df['player'].apply(lambda x: 18 if x==selected_player else 16 if x=='Christian Dannemann Eriksen' else 12)
+mid_prog_df['marker_size'] = mid_prog_df['player'].apply(
+    lambda x: 18 if x==selected_player 
+              else 16 if x=='Christian Dannemann Eriksen' 
+              else 12
+)
 
 fig.update_traces(marker=dict(size=mid_prog_df['marker_size'], opacity=0.8))
 
@@ -121,7 +125,8 @@ fig2.update_layout(
     yaxis_title='Final Third /90',
     legend_title_text='Player Type'
 )
-mid_prog_df['marker_size'] = mid_prog_df['player'].apply(lambda x: 18 if x==selected_player else 16 if x=='Christian Dannemann Eriksen' else 12)
+
+
 
 fig2.update_traces(marker=dict(size=mid_prog_df['marker_size'], opacity=0.8))
 
