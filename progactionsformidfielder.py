@@ -85,13 +85,7 @@ fig.update_layout(
     legend_title_text='Player Type'
 )
 
-mid_prog_df['marker_size'] = mid_prog_df['player'].apply(
-    lambda x:18 if x==selected_player 
-              else 16 if x=='Christian Dannemann Eriksen' 
-              
-)
 
-fig.update_traces(marker=dict(size=mid_prog_df['marker_size'], opacity=0.8))
 
 
 st.plotly_chart(fig, use_container_width=True)
@@ -118,7 +112,7 @@ fig2 = px.scatter(
     },
 )
 
-fig2.update_traces(marker=dict(size=9))
+
 fig2.update_layout(
     title='Progressive Passes vs Final Third Entries',
     xaxis_title='Prog Passes /90',
@@ -181,4 +175,5 @@ def highlight_players(row):
         return ['' for _ in row]
 
 st.dataframe(rank_table.style.apply(highlight_players, axis=1))
+
 
