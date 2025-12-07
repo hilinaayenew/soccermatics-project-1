@@ -23,9 +23,8 @@ players = mid_prog_df["player"].tolist()
 selected_player = st.selectbox("Select a player", players)
 player_data = mid_prog_df[mid_prog_df["player"] == selected_player]
 
-
 # -----------------------
-# Hover text generation
+# Hover text for Plotly
 # -----------------------
 mid_prog_df['hover_text'] = (
     "Player: " + mid_prog_df['player'] +
@@ -37,23 +36,30 @@ mid_prog_df['hover_text'] = (
 )
 
 # -----------------------
-# Assign color categories
+# Assign color categories for plot
 # -----------------------
 def assign_color(player):
     if player == "Christian Dannemann Eriksen":
-        return "Eriksen "
+        return "Eriksen"
     elif player == selected_player:
-        return f"Selected: {selected_player} "
+        return "Selected Player : {selected_player}"
     else:
-        return "Other midfielders "
+        return "Other Midfielders"
 
 mid_prog_df['color_label'] = mid_prog_df['player'].apply(assign_color)
 
 COLOR_MAP = {
-    "Eriksen ": "#0C6DBC",
+   "Eriksen ": "#0C6DBC",
     f"Selected: {selected_player} ": "#981717",
     "Other midfielders ": "#ADD8E6"
 }
+
+# -----------------------
+# Assign marker sizes
+# -----------------------
+mid_prog_df['marker_size'] = mid_prog_df['player'].apply(
+    lambda x: 18 if x == selected_player else 16 if x == "Christian Dannemann Eriksen" else 12
+)
 
 # -----------------------
 # Scatter plot 1: Passes vs Carries
@@ -75,24 +81,17 @@ fig = px.scatter(
         'prog_passes_final_third_90': True,
         'color_label': False
     },
+    size='marker_size',
+    size_max=25,
+    opacity=0.8
 )
 
-fig.update_traces(marker=dict(size=9))
 fig.update_layout(
     title='Progressive Passes vs Carries per 90',
     xaxis_title='Prog Passes /90',
     yaxis_title='Prog Carries /90',
     legend_title_text='Player Type'
 )
-
-mid_prog_df['marker_size'] = mid_prog_df['player'].apply(
-    lambda x: 18 if x==selected_player 
-              else 16 if x=='Christian Dannemann Eriksen' 
-              else 12
-)
-
-fig.update_traces(marker=dict(size=mid_prog_df['marker_size'], opacity=0.8))
-
 
 st.plotly_chart(fig, use_container_width=True)
 
@@ -116,19 +115,17 @@ fig2 = px.scatter(
         'prog_passes_final_third_90': True,
         'color_label': False
     },
+    size='marker_size',
+    size_max=25,
+    opacity=0.8
 )
 
-fig2.update_traces(marker=dict(size=9))
 fig2.update_layout(
     title='Progressive Passes vs Final Third Entries',
     xaxis_title='Prog Passes /90',
     yaxis_title='Final Third /90',
     legend_title_text='Player Type'
 )
-
-
-
-fig2.update_traces(marker=dict(size=mid_prog_df['marker_size'], opacity=0.8))
 
 st.plotly_chart(fig2, use_container_width=True)
 
@@ -174,9 +171,9 @@ rank_table = rank_table[[
 
 def highlight_players(row):
     if row["player"] == selected_player:
-        return ['background-color: lightcoral' for _ in row]
+        return ['background-color: lightgreen' for _ in row]
     elif row["player"] == "Christian Dannemann Eriksen":
-        return ['background-color: lightblue' for _ in row]
+        return ['background-color: lightcoral' for _ in row]
     else:
         return ['' for _ in row]
 
