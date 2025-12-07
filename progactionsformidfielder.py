@@ -23,6 +23,7 @@ players = mid_prog_df["player"].tolist()
 selected_player = st.selectbox("Select a player", players)
 player_data = mid_prog_df[mid_prog_df["player"] == selected_player]
 
+
 # -----------------------
 # Hover text generation
 # -----------------------
@@ -40,18 +41,18 @@ mid_prog_df['hover_text'] = (
 # -----------------------
 def assign_color(player):
     if player == "Christian Dannemann Eriksen":
-        return "Eriksen (red)"
+        return "Eriksen "
     elif player == selected_player:
-        return f"Selected: {selected_player} (green)"
+        return f"Selected: {selected_player} "
     else:
-        return "Other midfielders (light blue)"
+        return "Other midfielders "
 
 mid_prog_df['color_label'] = mid_prog_df['player'].apply(assign_color)
 
 COLOR_MAP = {
-    "Eriksen (blue)": "#06355C",
-    f"Selected: {selected_player} (red)": "#981717",
-    "Other midfielders (light blue)": "#ADD8E6"
+    "Eriksen ": "#06355C",
+    f"Selected: {selected_player} ": "#981717",
+    "Other midfielders ": "#ADD8E6"
 }
 
 # -----------------------
@@ -76,13 +77,18 @@ fig = px.scatter(
     },
 )
 
-fig.update_traces(marker=dict(size=12, opacity=0.8))
+fig.update_traces(marker=dict(size=9))
 fig.update_layout(
     title='Progressive Passes vs Carries per 90',
     xaxis_title='Prog Passes /90',
     yaxis_title='Prog Carries /90',
     legend_title_text='Player Type'
 )
+
+mid_prog_df['marker_size'] = mid_prog_df['player'].apply(lambda x: 18 if x==selected_player else 16 if x=='Christian Dannemann Eriksen' else 12)
+
+fig.update_traces(marker=dict(size=mid_prog_df['marker_size'], opacity=0.8))
+
 
 st.plotly_chart(fig, use_container_width=True)
 
@@ -108,13 +114,16 @@ fig2 = px.scatter(
     },
 )
 
-fig2.update_traces(marker=dict(size=12, opacity=0.8))
+fig2.update_traces(marker=dict(size=9))
 fig2.update_layout(
     title='Progressive Passes vs Final Third Entries',
     xaxis_title='Prog Passes /90',
     yaxis_title='Final Third /90',
     legend_title_text='Player Type'
 )
+mid_prog_df['marker_size'] = mid_prog_df['player'].apply(lambda x: 18 if x==selected_player else 16 if x=='Christian Dannemann Eriksen' else 12)
+
+fig2.update_traces(marker=dict(size=mid_prog_df['marker_size'], opacity=0.8))
 
 st.plotly_chart(fig2, use_container_width=True)
 
