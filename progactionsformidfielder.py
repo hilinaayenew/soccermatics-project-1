@@ -86,9 +86,9 @@ fig.update_layout(
 )
 
 mid_prog_df['marker_size'] = mid_prog_df['player'].apply(
-    lambda x: 18 if x==selected_player 
+    lambda x:18 if x==selected_player 
               else 16 if x=='Christian Dannemann Eriksen' 
-              else 12
+              
 )
 
 fig.update_traces(marker=dict(size=mid_prog_df['marker_size'], opacity=0.8))
@@ -181,3 +181,4 @@ def highlight_players(row):
         return ['' for _ in row]
 
 st.dataframe(rank_table.style.apply(highlight_players, axis=1))
+
