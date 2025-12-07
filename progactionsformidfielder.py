@@ -10,6 +10,7 @@ st.set_page_config(
     page_icon="⚽",
     layout="wide",       # This makes the app full width
     initial_sidebar_state="expanded"
+    background-color: white
 )
 
 # -----------------------
@@ -173,4 +174,5 @@ def highlight_players(row):
         return ['' for _ in row]
 
 st.dataframe(rank_table.style.apply(highlight_players, axis=1))
+
 
